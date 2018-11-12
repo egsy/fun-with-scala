@@ -1,0 +1,1 @@
+scalac -bootclasspath /Users/elaine/.ivy2/cache/org.scala-lang/scala-library/jars/scala-library-2.12.7.jar -classpath /Users/elaine/Documents/github/egsy/fun-with-scala/tutorial-scalatest/scalatesttutorial/target/scala-2.12/classes /Users/elaine/Documents/github/egsy/fun-with-scala/tutorial-scalatest/scalatesttutorial/src/main/scala/CubeCalculator.scala

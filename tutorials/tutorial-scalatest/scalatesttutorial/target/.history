@@ -1,0 +1,3 @@
+16.toHexString
+16.toHexString shouldBe 16
+exit
