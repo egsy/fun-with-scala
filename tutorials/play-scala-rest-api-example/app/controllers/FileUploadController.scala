@@ -11,4 +11,5 @@ class FileUploadController @Inject()(cc: ControllerComponents) extends AbstractC
     def upload = Action(parse.temporaryFile) { request =>
         request.body.moveTo(Paths.get("/tmp/picture/uploaded"), replace = true)
         Ok("File uploaded")
+    }
 }
