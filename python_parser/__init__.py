@@ -5,11 +5,10 @@ from werkzeug.utils import secure_filename
 
 
 # app = Flask(__name__)
-# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 def create_app(test_config=None):
-    UPLOAD_FOLDER = './uploads'
+    UPLOAD_FOLDER = './uploads',
     ALLOWED_EXTENSIONS = set(['txt'])
 
     # create and configure the app
@@ -44,6 +43,7 @@ def create_app(test_config=None):
         return '.' in filename and \
                filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+    # index route is file upload
     @app.route('/', methods=['GET', 'POST'])
     def upload_file():
         if request.method == 'POST':
