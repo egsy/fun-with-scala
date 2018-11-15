@@ -1,7 +1,7 @@
 import os
 # import requests
 
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect, url_for, jsonify
 from werkzeug.utils import secure_filename
 from collections import Counter
 
@@ -67,6 +67,8 @@ def create_app(test_config=None):
                     read_data = f.read()
                     word_freq = Counter(read_data.split()).most_common()
                     word_count = len(read_data.split())
+                return(jsonify(count=word_count, freq=word_freq))
+
 
 
         return '''
