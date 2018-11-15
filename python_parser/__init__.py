@@ -6,15 +6,13 @@ from werkzeug.utils import secure_filename
 
 UPLOAD_FOLDER = '../'
 ALLOWED_EXTENSIONS = set(['txt', 'rst'])
-# app = Flask(__name__)
+
 
 def allowed_file(filename):
     return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def create_app(test_config=None):
-
-
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
