@@ -4,23 +4,23 @@ import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
 
-
+UPLOAD_FOLDER = '../'
+ALLOWED_EXTENSIONS = set(['txt', 'rst'])
 # app = Flask(__name__)
 
 def allowed_file(filename):
-    ALLOWED_EXTENSIONS = set(['txt'])
     return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 def create_app(test_config=None):
-    UPLOAD_FOLDER = './uploads',
+
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
         SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'python_parser.sqlite'),
     )
 
     if test_config is None:
