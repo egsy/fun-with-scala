@@ -58,9 +58,15 @@ def create_app(test_config=None):
                 return redirect(request.url)
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
+
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                return redirect(url_for('uploaded_file',
-                                        filename=filename))
+                # return redirect(url_for('uploaded_file',
+                                        #filename=filename))
+                file_url = url_for('upload_file', filename=filename)
+                with open(filename) as f:
+                    read_data = f.read()
+
+                return ('the text is' + read_data)
         return '''
         <!doctype html>
         <title>Upload new File</title>
