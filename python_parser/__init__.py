@@ -1,4 +1,5 @@
 import os
+# import requests
 
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -6,13 +7,17 @@ from werkzeug.utils import secure_filename
 
 # app = Flask(__name__)
 
+def allowed_file(filename):
+    ALLOWED_EXTENSIONS = set(['txt'])
+    return filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 def create_app(test_config=None):
     UPLOAD_FOLDER = './uploads',
-    ALLOWED_EXTENSIONS = set(['txt'])
 
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
+
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
@@ -38,10 +43,6 @@ def create_app(test_config=None):
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
-
-    def allowed_file(filename):
-        return '.' in filename and \
-               filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
     # index route is file upload
     @app.route('/', methods=['GET', 'POST'])
@@ -76,5 +77,8 @@ def create_app(test_config=None):
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
         return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+    from . import db
+    db.init_app(app)
 
     return app
