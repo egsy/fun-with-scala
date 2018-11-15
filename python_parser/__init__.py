@@ -3,6 +3,8 @@ import os
 
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
+from collections import Counter
+
 
 UPLOAD_FOLDER = '../'
 ALLOWED_EXTENSIONS = set(['txt', 'rst'])
@@ -60,13 +62,13 @@ def create_app(test_config=None):
                 filename = secure_filename(file.filename)
 
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                # return redirect(url_for('uploaded_file',
-                                        #filename=filename))
                 file_url = url_for('upload_file', filename=filename)
                 with open(filename) as f:
                     read_data = f.read()
+                    word_freq = Counter(read_data.split()).most_common()
+                    word_count = len(read_data.split())
 
-                return ('the text is' + read_data)
+
         return '''
         <!doctype html>
         <title>Upload new File</title>
