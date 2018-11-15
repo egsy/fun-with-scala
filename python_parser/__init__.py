@@ -1,7 +1,5 @@
 import os
-# import requests
-
-from flask import Flask, flash, request, redirect, url_for, jsonify
+from flask import Flask, flash, request, redirect, jsonify
 from werkzeug.utils import secure_filename
 from collections import Counter
 
@@ -60,16 +58,13 @@ def create_app(test_config=None):
                 return redirect(request.url)
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
-
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                file_url = url_for('upload_file', filename=filename)
+
                 with open(filename) as f:
                     read_data = f.read()
                     word_freq = Counter(read_data.split()).most_common()
                     word_count = len(read_data.split())
                 return(jsonify(count=word_count, freq=word_freq))
-
-
 
         return '''
         <!doctype html>
