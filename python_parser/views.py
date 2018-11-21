@@ -4,16 +4,12 @@ from werkzeug.utils import secure_filename
 from collections import Counter
 from . import app
 
+from flask import send_from_directory
+
 
 def allowed_file(filename):
     ALLOWED_EXTENSIONS = set(["txt", "rst"])
     return filename.rsplit(".", 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
-# a simple page that says hello
-@app.route("/hello")
-def hello():
-    return "Hello, World! This is a refactorrrrrrr."
 
 
 # index route is file upload
@@ -50,9 +46,6 @@ def upload_file():
       <input type=submit value=Upload>
     </form>
     """
-
-
-from flask import send_from_directory
 
 
 @app.route("/uploads/<filename>")
