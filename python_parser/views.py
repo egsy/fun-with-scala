@@ -28,7 +28,10 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config["UPLOAD_FOLDER"], filename))
+            file.save(
+                os.path.join(app.instance_path, app.config["UPLOAD_FOLDER"], filename)
+            )
+            # file.save(os.path.join(app.instance_path, "UPLOAD_FOLDER", filename))
             file_parse = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             file_url = url_for("upload_file", filename=filename)
             with open(file_parse) as f:
