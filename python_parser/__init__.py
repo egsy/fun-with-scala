@@ -5,18 +5,21 @@ from werkzeug.utils import secure_filename
 from collections import Counter
 from . import db
 
-app = Flask(__name__)
+UPLOAD_FOLDER = "../"
+# config upload folder
+
+# app = Flask(__name__)
+app = Flask(__name__, instance_relative_config=True)
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 import python_parser.views
 import python_parser.db
 
-UPLOAD_FOLDER = "../"
-ALLOWED_EXTENSIONS = set(["txt", "rst"])
-
 
 def create_app(test_config=None):
+
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    # app = Flask(__name__, instance_relative_config=True)
 
     app.config.from_mapping(
         SECRET_KEY="dev",
@@ -35,9 +38,6 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
-
-    # config upload folder
-    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
     db.init_app(app)
 
