@@ -35,8 +35,11 @@ def upload_file():
             file_parse = os.path.join(app.config["UPLOAD_FOLDER"], filename)
             file_url = url_for("upload_file", filename=filename)
             with open(file_parse) as f:
-                read_data = f.read()
-                word_freq = Counter(read_data.split()).most_common()
+                read_data = f.read().lower()
+                # word_freq = Counter(read_data.split()).most_common()
+                word_freq = Counter(
+                    [x.strip("\n,. ") for x in read_data.split(" ")]
+                ).most_common()
                 word_count = len(read_data.split())
             return jsonify(count=word_count, freq=word_freq)
 
