@@ -1,10 +1,18 @@
 import os
-from flask import Flask, flash, request, redirect, jsonify, url_for
+from flask import (
+    Flask,
+    flash,
+    request,
+    redirect,
+    json,
+    jsonify,
+    url_for,
+    send_from_directory,
+    render_template,
+)
 from werkzeug.utils import secure_filename
 from collections import Counter
 from . import app
-
-from flask import send_from_directory
 
 
 def allowed_file(filename):
@@ -41,17 +49,13 @@ def upload_file():
                     [x.strip("\n,. ") for x in read_data.split(" ")]
                 ).most_common()
                 word_count = len(read_data.split())
-            return jsonify(count=word_count, freq=word_freq)
-
-    return """
-    <!doctype html>
-    <title>Upload new File</title>
-    <h1>Upload new File</h1>
-    <form method=post enctype=multipart/form-data>
-      <input type=file name=file>
-      <input type=submit value=Upload>
-    </form>
-    """
+                data = {}
+                data.update(word_freq)
+            words = data.fromkeys("")
+            number = data.items()
+            columnNames = data.keys()
+        return render_template("table.html", records=words, colnames=number)
+    return render_template("index.html")
 
 
 @app.route("/uploads/<filename>")
