@@ -49,12 +49,8 @@ def upload_file():
                     [x.strip("\n,. ") for x in read_data.split(" ")]
                 ).most_common()
                 word_count = len(read_data.split())
-                data = {}
-                data.update(word_freq)
-            words = data.fromkeys("")
-            number = data.items()
-            columnNames = data.keys()
-        return render_template("table.html", records=words, colnames=number)
+            return jsonify(count=word_count, freq=word_freq)
+        return render_template("table.html", word_freq=word_freq, word_count=word_count)
     return render_template("index.html")
 
 
